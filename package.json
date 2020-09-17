@@ -11,6 +11,9 @@
     "type": "git",
     "url": "git+https://github.com/School-In-The-Cloud-1-Sept-BW-PT/Back-End.git"
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
