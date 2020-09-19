@@ -25,6 +25,7 @@ function remove(id) {
 module.exports = {
   find,
   findById,
+  findByEmail,
   add,
   remove,
 };

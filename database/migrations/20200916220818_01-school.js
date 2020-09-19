@@ -40,6 +40,6 @@ exports.up = async function (knex) {
 exports.down = async function (knex) {
   await knex.schema.dropTableIfExists('tasks');
   await knex.schema.dropTableIfExists('students');
-  await knex.schema.dropTableIfExists('voluneteers');
+  await knex.schema.dropTableIfExists('volunteers');
   await knex.schema.dropTableIfExists('admins');
 };
