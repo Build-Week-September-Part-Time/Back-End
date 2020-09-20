@@ -12,6 +12,14 @@ function findByEmail(email) {
   return db('volunteers').where('email', email).first();
 }
 
+function findByAvailability(avail) {
+  return db('volunteers').where('availability', avail);
+}
+
+function findByState(state) {
+  return db('volunteers').where('state', state);
+}
+
 function getTasks(id) {
   return db('tasks').where('volunteer_id', id);
 }
@@ -34,6 +42,8 @@ module.exports = {
   find,
   findById,
   findByEmail,
+  findByAvailability,
+  findByState,
   getTasks,
   add,
   update,

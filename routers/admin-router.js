@@ -30,7 +30,7 @@ router.get('/assignTasks/volunteers/:id', async (req, res, next) => {
   }
 });
 
-router.post('/assignTasks', async (req, res, next) => {
+router.post('/assignTasks', restrict(), async (req, res, next) => {
   try {
     const emailVolunteer = await Volunteer.findByEmail(req.body.email).first();
 
@@ -59,9 +59,10 @@ router.post('/assignTasks', async (req, res, next) => {
   }
 });
 
-router.put('/assignTasks/:id', async (req, res, next) => {
+router.put('/assignTasks/:id', restrict(), async (req, res, next) => {
   try {
     const emailVolunteer = await Volunteer.findByEmail(req.body.email).first();
+    const task = await Task.findById(req.params.id).first();
 
     if (!req.body.email || !req.body.title || !req.body.description) {
       return res.status(401).json({
@@ -75,6 +76,12 @@ router.put('/assignTasks/:id', async (req, res, next) => {
       });
     }
 
+    if (task === undefined) {
+      return res.status(409).json({
+        message: 'Task doesnt exist',
+      });
+    }
+
     const changes = {
       title: req.body.title,
       description: req.body.description,
@@ -84,11 +91,23 @@ router.put('/assignTasks/:id', async (req, res, next) => {
 
     const newTask = await Task.update(changes, req.params.id);
 
-    res.status(201).json({ message: 'Change success', changes });
+    res.status(201).json(changes);
   } catch (error) {
     next(error);
   }
 });
 
-router.post('/assignTasks', restrict(), async (req, res, next) => {});
+router.delete('/assignTasks/:id', restrict(), async (req, res, next) => {
+  try {
+    if (!req.params.id) {
+      return res.status(401).json({
+        message: 'task doesnt exist',
+      });
+    }
+    res.json(await Task.remove(req.params.id));
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
