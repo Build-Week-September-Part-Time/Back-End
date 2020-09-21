@@ -39,6 +39,7 @@ exports.up = async function (knex) {
       .inTable('volunteers')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
+
     // table
     //   .text('volunteer_email')
     //   .notNullable()
@@ -46,6 +47,8 @@ exports.up = async function (knex) {
     //   .inTable('volunteers')
     //   .onDelete('CASCADE')
     //   .onUpdate('CASCADE');
+
+
   });
 };
 
