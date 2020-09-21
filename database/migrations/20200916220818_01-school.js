@@ -43,7 +43,7 @@ exports.up = async function (knex) {
       .text('volunteer_email')
       .notNullable()
       .references('email')
-      .inTable('volunteers');
+      .inTable('volunteers')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
   });
