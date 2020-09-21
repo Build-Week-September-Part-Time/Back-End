@@ -49,6 +49,8 @@ exports.up = async function (knex) {
   });
 };
 
+//commment
+
 exports.down = async function (knex) {
   await knex.schema.dropTableIfExists('tasks');
   await knex.schema.dropTableIfExists('students');
