@@ -32,8 +32,18 @@ exports.up = async function (knex) {
     table.increments('id');
     table.text('title').notNull();
     table.text('description').notNull();
-    table.integer('volunteer_id').references('id').inTable('volunteers');
-    table.text('volunteer_email').references('email').inTable('volunteers');
+    table
+      .integer('volunteer_id')
+      .notNull()
+      .unsigned()
+      .references('id')
+      .inTable('volunteers');
+    table
+      .text('volunteer_email')
+      .notNull()
+      .unsigned()
+      .references('email')
+      .inTable('volunteers');
   });
 };
 
