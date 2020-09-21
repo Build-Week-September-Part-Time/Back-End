@@ -35,16 +35,9 @@ exports.up = async function (knex) {
     table.integer('volunteer_id').references('id').inTable('volunteers');
     table.text('volunteer_email').references('email').inTable('volunteers');
   });
-
-  // await knex.schema.createTable('student_volunteers', (table) => {
-  //   table.integer('student_id').references('id').inTable('students');
-  //   table.integer('volunteer_id').references('id').inTable('volunteers');
-  //   table.primary(['student_id', 'volunteer_id']);
-  // });
 };
 
 exports.down = async function (knex) {
-  await knex.schema.dropTableIfExists('student_volunteers');
   await knex.schema.dropTableIfExists('tasks');
   await knex.schema.dropTableIfExists('students');
   await knex.schema.dropTableIfExists('volunteers');
