@@ -1,49 +1,54 @@
 exports.up = async function (knex) {
   await knex.schema.createTable('admins', (table) => {
     table.increments('id');
-    table.text('email').notNull().unique();
-    table.text('firstname').notNull();
-    table.text('lastname').notNull();
-    table.text('password').notNull();
-    table.text('accountType').notNull();
+    table.text('email').notNullable().unique();
+    table.text('firstname').notNullable();
+    table.text('lastname').notNullable();
+    table.text('password').notNullable();
+    table.text('accountType').notNullable();
   });
 
   await knex.schema.createTable('volunteers', (table) => {
     table.increments('id');
-    table.text('email').notNull().unique();
-    table.text('firstname').notNull();
-    table.text('lastname').notNull();
-    table.text('password').notNull();
-    table.text('availability').notNull();
-    table.text('state').notNull();
-    table.text('accountType').notNull();
+    table.text('email').notNullable().unique();
+    table.text('firstname').notNullable();
+    table.text('lastname').notNullable();
+    table.text('password').notNullable();
+    table.text('availability').notNullable();
+    table.text('state').notNullable();
+    table.text('accountType').notNullable();
   });
 
   await knex.schema.createTable('students', (table) => {
     table.increments('id');
-    table.text('email').notNull().unique();
-    table.text('firstname').notNull();
-    table.text('lastname').notNull();
-    table.text('password').notNull();
-    table.text('accountType').notNull();
+    table.text('email').notNullable().unique();
+    table.text('firstname').notNullable();
+    table.text('lastname').notNullable();
+    table.text('password').notNullable();
+    table.text('accountType').notNullable();
   });
 
   await knex.schema.createTable('tasks', (table) => {
     table.increments('id');
-    table.text('title').notNull();
-    table.text('description').notNull();
+    table.text('title').notNullable();
+    table.text('description').notNullable();
     table
       .integer('volunteer_id')
-      .notNull()
+      .notNullable()
       .unsigned()
       .references('id')
-      .inTable('volunteers');
+      .inTable('volunteers')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
+    on;
     table
       .text('volunteer_email')
-      .notNull()
+      .notNullable()
       .unsigned()
       .references('email')
-      .inTable('volunteers');
+      .inTable('volunteers')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
   });
 };
 
