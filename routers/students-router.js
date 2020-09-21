@@ -1,57 +1,35 @@
 const express = require('express');
-const Volunteers = require('../models/sv-model');
-const Student = require('../models/students-model');
+const Volunteer = require('../models/volunteers-model');
+const StudentList = require('../models/sv-model');
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const restrict = require('../auth/restrict');
-const secret = '../auth/secret.js';
 
 router.get('/students', async (req, res, next) => {
   try {
-    res.status(201).json(await Student.find());
+    res.status(201).json(await Volunteer.find());
   } catch (error) {
     next(error);
   }
 });
 
-router.get('/students/:id', async (req, res, next) => {
-  try {
-    const student = await Student.findById(req.params.id).first();
+// router.post('/students/:studentid/add/:volunteerid', async (req, res, next) => {
+//   try {
+//     const volunteer = await Volunteer.findById(req.params.volunteerid);
 
-    if (student === undefined) {
-      return res.status(401).json({
-        message: 'student doesnt exist',
-      });
-    }
+//     if (volunteer === undefined) {
+//       return res.status(401).json({
+//         message: 'volunteer doesnt exist',
+//       });
+//     }
 
-    res.status(201).json(student);
-  } catch (error) {
-    next(error);
-  }
-});
+//     const addVol = await StudentList.add(
+//       req.params.studentid,
+//       req.params.volunteerid
+//     );
 
-router.get('/students/:id/volunteers', async (req, res, next) => {
-  try {
-    const volunteer = await Volunteer.findById(req.params.id).first();
-
-    if (volunteer === undefined) {
-      return res.status(401).json({
-        message: 'volunteer doesnt exist',
-      });
-    }
-
-    const tasks = await Volunteer.getTasks(req.params.id);
-
-    if (tasks === undefined) {
-      return res.status(401).json({
-        message: 'no tasks',
-      });
-    }
-
-    res.status(201).json(tasks);
-  } catch (error) {
-    next(error);
-  }
-});
+//     res.status(201).json(addVol);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 module.exports = router;

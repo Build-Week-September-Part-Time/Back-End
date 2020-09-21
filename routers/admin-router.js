@@ -8,7 +8,7 @@ const secret = '../auth/secret.js';
 
 router.get('/assignTasks', async (req, res, next) => {
   try {
-    res.json(await Task.find());
+    res.status(200).json(await Task.find());
   } catch (error) {
     next(error);
   }
@@ -16,7 +16,7 @@ router.get('/assignTasks', async (req, res, next) => {
 
 router.get('/assignTasks/volunteers', async (req, res, next) => {
   try {
-    res.json(await Volunteer.find());
+    res.status(200).json(await Volunteer.find());
   } catch (error) {
     next(error);
   }
@@ -24,7 +24,7 @@ router.get('/assignTasks/volunteers', async (req, res, next) => {
 
 router.get('/assignTasks/volunteers/:id', async (req, res, next) => {
   try {
-    res.json(await Volunteer.findById(req.params.id).first());
+    res.status(200).json(await Volunteer.findById(req.params.id).first());
   } catch (error) {
     next(error);
   }
@@ -104,7 +104,7 @@ router.delete('/assignTasks/:id', restrict(), async (req, res, next) => {
         message: 'task doesnt exist',
       });
     }
-    res.json(await Task.remove(req.params.id));
+    res.status(204).json(await Task.remove(req.params.id));
   } catch (error) {
     next(error);
   }

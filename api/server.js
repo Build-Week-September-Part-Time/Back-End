@@ -5,18 +5,17 @@ const cookieParser = require('cookie-parser');
 const userRouter = require('../routers/users-router');
 const adminRouter = require('../routers/admin-router');
 const volunteerRouter = require('../routers/volunteers-router');
-// const authenticate = require('../auth/authenticate-middleware.js');
-// const authRouter = require('../auth/auth-router.js');
-// const jokesRouter = require('../jokes/jokes-router.js');
+const studentRouter = require('../routers/students-router');
 
 const server = express();
 server.use(cookieParser());
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
-server.use('/api/auth', userRouter);
-server.use('/api/', adminRouter);
-server.use('/api', volunteerRouter);
+server.use('/auth', userRouter);
+server.use('/dashboard', adminRouter);
+server.use('/dashboard', volunteerRouter);
+server.use('/dashboard', studentRouter);
 // server.use('/api/auth', authRouter);
 // server.use('/api/jokes', authenticate, jokesRouter);
 

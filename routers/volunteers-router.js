@@ -24,7 +24,7 @@ router.get('/volunteers/:id', async (req, res, next) => {
       });
     }
 
-    res.status(201).json(volunteer);
+    res.status(200).json(volunteer);
   } catch (error) {
     next(error);
   }
@@ -48,7 +48,7 @@ router.get('/volunteers/:id/tasks', async (req, res, next) => {
       });
     }
 
-    res.status(201).json(tasks);
+    res.status(200).json(tasks);
   } catch (error) {
     next(error);
   }
@@ -86,9 +86,9 @@ router.put('/volunteers/:id', async (req, res, next) => {
       };
     }
 
-    const updateVolunteer = await Volunteer.update(changes, req.params.id);
+    await Volunteer.update(changes, req.params.id);
 
-    res.status(201).json(changes);
+    res.status(200).json(changes);
   } catch (error) {
     next(error);
   }
@@ -101,7 +101,7 @@ router.delete('/volunteers/:id', restrict(), async (req, res, next) => {
         message: 'volunteer doesnt exist',
       });
     }
-    res.json(await Volunteer.remove(req.params.id));
+    res.status(204).json(await Volunteer.remove(req.params.id));
   } catch (error) {
     next(error);
   }

@@ -47,6 +47,7 @@ router.post('/register', async (req, res, next) => {
         email: req.body.email,
         password: await bcrypt.hash(req.body.password, 14),
         accountType: req.body.accountType,
+        availability: req.body.availability,
         state: req.body.state,
       });
       res.status(201).json(volunteer);
@@ -108,7 +109,7 @@ router.post('/login', async (req, res, next) => {
 
     res.cookie('token', token);
 
-    res.json({
+    res.status(200).json({
       message: `Welcome ${user.email}!`,
     });
   } catch (error) {
