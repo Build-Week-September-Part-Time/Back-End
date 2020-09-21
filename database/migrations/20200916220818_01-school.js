@@ -37,8 +37,8 @@ exports.up = async function (knex) {
   });
 
   await knex.schema.createTable('student_volunteers', (table) => {
-    table.text('student_id').references('id').inTable('students');
-    table.text('volunteer_id').references('id').inTable('volunteers');
+    table.integer('student_id').references('id').inTable('students');
+    table.integer('volunteer_id').references('id').inTable('volunteers');
     table.primary(['student_id', 'volunteer_id']);
   });
 };
