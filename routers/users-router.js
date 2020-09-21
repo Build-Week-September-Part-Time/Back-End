@@ -4,6 +4,8 @@ const Volunteer = require('../models/volunteers-model');
 const Student = require('../models/students-model');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const secret = '../auth/secret.js';
 
 router.post('/register', async (req, res, next) => {
   try {
@@ -12,11 +14,11 @@ router.post('/register', async (req, res, next) => {
     const emailStudent = await Student.findByEmail(req.body.email).first();
 
     if (
+      !req.body.email ||
       !req.body.firstname ||
-      req.body.lastname ||
-      req.body.email ||
-      req.body.password ||
-      req.body.accountType
+      !req.body.lastname ||
+      !req.body.password ||
+      !req.body.accountType
     ) {
       return res.status(401).json({
         message: 'Missing attributes',
@@ -31,30 +33,31 @@ router.post('/register', async (req, res, next) => {
 
     if (req.body.accountType === 'admin') {
       const admin = await Admin.add({
-        firstname,
-        lastname,
-        email,
-        password: await bcrypt.hash(password, 14),
-        accountType,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: await bcrypt.hash(req.body.password, 14),
+        accountType: req.body.accountType,
       });
       res.status(201).json(admin);
     } else if (req.body.accountType === 'volunteer') {
       const volunteer = await Volunteer.add({
-        firstname,
-        lastname,
-        email,
-        password: await bcrypt.hash(password, 14),
-        accountType,
-        state,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: await bcrypt.hash(req.body.password, 14),
+        accountType: req.body.accountType,
+        availability: req.body.availability,
+        state: req.body.state,
       });
       res.status(201).json(volunteer);
     } else if (req.body.accountType === 'student') {
       const student = await Student.add({
-        firstname,
-        lastname,
-        email,
-        password: await bcrypt.hash(password, 14),
-        accountType,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: await bcrypt.hash(req.body.password, 14),
+        accountType: req.body.accountType,
       });
       res.status(201).json(student);
     } else {
@@ -66,3 +69,62 @@ router.post('/register', async (req, res, next) => {
     next(err);
   }
 });
+
+router.post('/login', async (req, res, next) => {
+  try {
+    if (!req.body.email || !req.body.password) {
+      return res.status(401).json({
+        message: 'Missing attributes',
+      });
+    }
+
+    const emailAdmin = await Admin.findByEmail(req.body.email).first();
+    const emailVolunteer = await Volunteer.findByEmail(req.body.email).first();
+    const emailStudent = await Student.findByEmail(req.body.email).first();
+
+    // console.log(emailAdmin);
+    // console.log(emailVolunteer);
+    // console.log(emailStudent);
+
+    if (emailAdmin != undefined) {
+      user = await Admin.findByEmail(req.body.email).first();
+    } else if (emailVolunteer != undefined) {
+      user = await Volunteer.findByEmail(req.body.email).first();
+    } else if (emailStudent != undefined) {
+      user = await Student.findByEmail(req.body.email).first();
+    }
+
+    const passwordValid = await bcrypt.compareSync(
+      req.body.password,
+      user.password
+    );
+
+    if (!passwordValid) {
+      return res.status(401).json({
+        message: 'Invalid Credentials',
+      });
+    }
+
+    const token = generateToken(user);
+
+    res.cookie('token', token);
+
+    res.status(200).json({
+      message: `Welcome ${user.email}!`,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+function generateToken(user) {
+  const payload = {
+    userID: user.id,
+    userRole: user.accountType,
+  };
+  const secret = process.env.JWT_SECRET || 'Fly you fools';
+
+  return jwt.sign(payload, secret);
+}
+
+module.exports = router;

@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 exports.seed = async function (knex) {
   await knex('volunteers').truncate();
   await knex('volunteers').insert([
@@ -5,7 +6,7 @@ exports.seed = async function (knex) {
       email: 'volunteer1@gmail.com',
       firstname: 'Amy',
       lastname: 'Baker',
-      password: 'password',
+      password: await bcrypt.hash('password', 14),
       availability: 'Weekends',
       state: 'Arizona',
       accountType: 'volunteer',
@@ -14,7 +15,7 @@ exports.seed = async function (knex) {
       email: 'volunteer2@gmail.com',
       firstname: 'Christy',
       lastname: 'Derek',
-      password: 'password',
+      password: await bcrypt.hash('password', 14),
       availability: 'Every day',
       state: 'Colorado',
       accountType: 'volunteer',
@@ -23,7 +24,7 @@ exports.seed = async function (knex) {
       email: 'volunteer3@gmail.com',
       firstname: 'Edward',
       lastname: 'Fair',
-      password: 'password',
+      password: await bcrypt.hash('password', 14),
       availability: 'Weekdays',
       state: 'Florida',
       accountType: 'volunteer',
@@ -32,7 +33,7 @@ exports.seed = async function (knex) {
       email: 'volunteer4@gmail.com',
       firstname: 'Gary',
       lastname: 'Hughes',
-      password: 'password',
+      password: await bcrypt.hash('password', 14),
       availability: 'Weekends',
       state: 'Texas',
       accountType: 'volunteer',
