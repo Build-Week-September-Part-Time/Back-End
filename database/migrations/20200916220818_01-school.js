@@ -33,18 +33,19 @@ exports.up = async function (knex) {
     table.text('title').notNullable();
     table.text('description').notNullable();
     table
-      .integer('volunteer_id')
-      .notNullable()
       .unsigned()
+      .notNullable()
+
+      .integer('volunteer_id')
       .references('id')
       .inTable('volunteers')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
     on;
     table
-      .text('volunteer_email')
-      .notNullable()
       .unsigned()
+      .notNullable()
+      .text('volunteer_email')
       .references('email')
       .inTable('volunteers')
       .onDelete('CASCADE')
