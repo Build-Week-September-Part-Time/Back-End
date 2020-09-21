@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 exports.seed = async function (knex) {
-  await knex('volunteers').truncate();
+  await knex('volunteers').del();
   await knex('volunteers').insert([
     {
       email: 'volunteer1@gmail.com',

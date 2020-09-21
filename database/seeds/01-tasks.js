@@ -1,5 +1,5 @@
 exports.seed = async function (knex) {
-  await knex('tasks').truncate();
+  await knex('tasks').del();
   await knex('tasks').insert([
     {
       title: 'Icebreaker',
