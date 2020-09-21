@@ -33,21 +33,17 @@ exports.up = async function (knex) {
     table.text('title').notNullable();
     table.text('description').notNullable();
     table
-      .unsigned()
-      .notNullable()
-
       .integer('volunteer_id')
+      .notNullable()
       .references('id')
       .inTable('volunteers')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
-    on;
     table
-      .unsigned()
-      .notNullable()
       .text('volunteer_email')
+      .notNullable()
       .references('email')
-      .inTable('volunteers')
+      .inTable('volunteers');
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
   });
