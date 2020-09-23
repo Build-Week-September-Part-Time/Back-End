@@ -81,7 +81,7 @@ router.post('/login', async (req, res, next) => {
     const emailAdmin = await Admin.findByEmail(req.body.email).first();
     const emailVolunteer = await Volunteer.findByEmail(req.body.email).first();
     const emailStudent = await Student.findByEmail(req.body.email).first();
-
+    let user;
     // console.log(emailAdmin);
     // console.log(emailVolunteer);
     // console.log(emailStudent);
@@ -111,6 +111,8 @@ router.post('/login', async (req, res, next) => {
 
     res.status(200).json({
       message: `Welcome ${user.email}!`,
+      token: token,
+      user: user,
     });
   } catch (error) {
     next(error);
