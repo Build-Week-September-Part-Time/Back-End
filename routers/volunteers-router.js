@@ -94,7 +94,7 @@ router.put('/volunteers/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/volunteers/:id', restrict(), async (req, res, next) => {
+router.delete('/volunteers/:id', async (req, res, next) => {
   try {
     if (!req.params.id) {
       return res.status(401).json({
