@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const {jwtSecret }= require('./secret')
 
 function restrict() {
   return async (req, res, next) => {
@@ -8,13 +9,14 @@ function restrict() {
 
     try {
       const token = req.cookies.token;
-
+      console.log(token);
       if (!token) {
         return res.status(401).json(authError);
       }
 
-      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      jwt.verify(token, jwtSecret, (err, decoded) => {
         if (err) {
+          console.log(err);
           return res.status(401).json(authError);
         }
 

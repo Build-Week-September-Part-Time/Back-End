@@ -32,9 +32,9 @@ router.get('/assignTasks/volunteers/:id', async (req, res, next) => {
 
 router.post('/assignTasks', restrict(), async (req, res, next) => {
   try {
-    const emailVolunteer = await Volunteer.findByEmail(req.body.email).first();
+    const emailVolunteer = await Volunteer.findByEmail(req.body.volunteer_email).first();
 
-    if (!req.body.email || !req.body.title || !req.body.description) {
+    if (!req.body.volunteer_email || !req.body.title || !req.body.description) {
       return res.status(401).json({
         message: 'Missing attributes',
       });
@@ -50,7 +50,7 @@ router.post('/assignTasks', restrict(), async (req, res, next) => {
       title: req.body.title,
       description: req.body.description,
       volunteer_id: emailVolunteer.id,
-      volunteer_email: req.body.email,
+      volunteer_email: req.body.volunteer_email,
     });
 
     res.status(201).json(newTask);
