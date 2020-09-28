@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/School-In-The-Cloud-1-Sept-BW-PT/Back-End#readme",
   "dependencies": {
+    "axios": "^0.20.0",
     "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",

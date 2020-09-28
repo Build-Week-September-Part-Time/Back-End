@@ -58,6 +58,7 @@ router.put('/volunteers/:id', async (req, res, next) => {
   try {
     const volunteer = await Volunteer.findById(req.params.id).first();
     const emailTaken = volunteer.email;
+    console.log(volunteer);
 
     if (volunteer === undefined) {
       return res.status(409).json({
